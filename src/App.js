@@ -6,7 +6,7 @@ export default function App(){
     const [show, setShow] = useState(false);
 
     useEffect(() => {
-        getIssue(5)
+        getIssue(getCurrentIssueId())
             .then(res =>
                 setData(res)
             )
