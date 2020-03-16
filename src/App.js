@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from 'react';
+import {getCurrentIssueId, getIssue} from './api';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App(){
+    const [data, setData] = useState([]);
+    const [show, setShow] = useState(false);
+
+    useEffect(() => {
+        getIssue(5)
+            .then(res =>
+                setData(res)
+            )
+    }, []);
+
+    const showText = () => {
+      setShow(!show)
+    };
+
+    return (
+        <div>
+            <h2> {data && data.title} </h2>
+            <div>
+              <button onClick={showText}>
+                todo ▼
+              </button>
+                {show &&
+                (<ul>
+                    <li>
+                    inProgress
+                    </li>
+                    <li>
+                    Done
+                    </li>
+                    </ul>
+                    )
+                }
+            </div>
+        </div>
+    )
 }
-
-export default App;
